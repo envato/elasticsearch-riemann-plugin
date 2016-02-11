@@ -2,14 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<name>elasticsearch-statsd</name>
+	<name>elasticsearch-riemann</name>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.spinscale.elasticsearch</groupId>
-	<artifactId>elasticsearch-statsd</artifactId>
-	<version>0.4.0</version>
+	<groupId>com.envato.elasticsearch</groupId>
+	<artifactId>elasticsearch-riemann</artifactId>
+	<version>0.1.0</version>
 	<packaging>jar</packaging>
-	<description>StatsD monitoring plugin for Elasticsearch</description>
-	<url>https://github.com/Automattic/elasticsearch-statsd-plugin/</url>
+	<description>Riemann monitoring plugin for Elasticsearch</description>
+	<url>https://github.com/envato/elasticsearch-riemann-plugin/</url>
+
+  <repositories>
+    <repository>
+      <id>clojars.org</id>
+      <url>http://clojars.org/repo</url>
+    </repository>
+  </repositories>
 
 	<properties>
 		<elasticsearch.version>1.7.5</elasticsearch.version>
@@ -18,10 +25,10 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.timgroup</groupId>
-			<artifactId>java-statsd-client</artifactId>
-			<version>3.0.2</version>
+	  <dependency>
+			<groupId>com.aphyr</groupId>
+			<artifactId>riemann-java-client</artifactId>
+			<version>0.4.1</version>
 		</dependency>
 
 		<dependency>

@@ -1,30 +1,27 @@
-package org.elasticsearch.service.statsd;
+package org.elasticsearch.service.riemann;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.elasticsearch.action.admin.cluster.node.stats.NodeStats;
+import org.elasticsearch.http.HttpStats;
 import org.elasticsearch.monitor.fs.FsStats;
 import org.elasticsearch.monitor.jvm.JvmStats;
-import org.elasticsearch.monitor.jvm.JvmStats.GarbageCollector;
 import org.elasticsearch.monitor.network.NetworkStats;
 import org.elasticsearch.monitor.os.OsStats;
 import org.elasticsearch.monitor.process.ProcessStats;
-import org.elasticsearch.http.HttpStats;
-import org.elasticsearch.transport.TransportStats;
 import org.elasticsearch.threadpool.ThreadPoolStats;
+import org.elasticsearch.transport.TransportStats;
 
-public class StatsdReporterNodeStats extends StatsdReporter {
+public class RiemannReporterNodeStats extends RiemannReporter {
 
 	private final NodeStats nodeStats;
 	private final String nodeName;
-	private final Boolean statsdReportFsDetails;
+	private final Boolean riemannReportFsDetails;
 
-	public StatsdReporterNodeStats(NodeStats nodeStats, String nodeName, Boolean statsdReportFsDetails) {
+	public RiemannReporterNodeStats(NodeStats nodeStats, String nodeName, Boolean riemannReportFsDetails) {
 		this.nodeStats = nodeStats;
 		this.nodeName = nodeName;
-		this.statsdReportFsDetails = statsdReportFsDetails;
+		this.riemannReportFsDetails = riemannReportFsDetails;
 	}
 
 	public void run() {
@@ -182,7 +179,7 @@ public class StatsdReporterNodeStats extends StatsdReporter {
 		this.sendNodeFsStatsInfo(prefix + ".total", fs.total());
 
 		// Maybe send details
-		if (this.statsdReportFsDetails) {
+		if (this.riemannReportFsDetails) {
 			Iterator<FsStats.Info> infoIterator = fs.iterator();
 			while (infoIterator.hasNext()) {
 				FsStats.Info info = infoIterator.next();

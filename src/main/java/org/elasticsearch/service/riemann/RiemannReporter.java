@@ -1,37 +1,37 @@
-package org.elasticsearch.service.statsd;
+package org.elasticsearch.service.riemann;
 
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.ESLoggerFactory;
 
-import com.timgroup.statsd.StatsDClient;
+import com.aphyr.riemann.client.RiemannClient;
 
-public abstract class StatsdReporter {
+public abstract class RiemannReporter {
 
 	private static final String DEFAULT_JOINER = ".";
-	private static final ESLogger logger = ESLoggerFactory.getLogger(StatsdReporter.class.getName());
-	private StatsDClient statsdClient;
+	private static final ESLogger logger = ESLoggerFactory.getLogger(RiemannReporter.class.getName());
+	private RiemannClientWrapper riemannClient;
 
-	public StatsdReporter setStatsDClient(StatsDClient statsdClient) {
-		this.statsdClient = statsdClient;
+	public RiemannReporter setRiemannClient(RiemannClientWrapper riemannClient) {
+		this.riemannClient = riemannClient;
 		return this;
 	}
 
 	public abstract void run();
 
 	protected void sendGauge(String name, String valueName, long value) {
-		this.statsdClient.gauge(this.join(name, valueName), value);
+		this.riemannClient.gauge(this.join(name, valueName), value);
 	}
 
 	protected void sendGauge(String name, String valueName, double value) {
-		this.statsdClient.gauge(this.join(name, valueName), value);
+		this.riemannClient.gauge(this.join(name, valueName), value);
 	}
 
 	protected void sendCount(String name, String valueName, long value) {
-		this.statsdClient.count(this.join(name, valueName), value);
+		this.riemannClient.count(this.join(name, valueName), value);
 	}
 
 	protected void sendTime(String name, String valueName, long value) {
-		this.statsdClient.time(this.join(name, valueName), value);
+		this.riemannClient.time(this.join(name, valueName), value);
 	}
 
 	protected String sanitizeString(String s) {
@@ -57,6 +57,6 @@ public abstract class StatsdReporter {
 	}
 
 	protected void logException(Exception e) {
-		this.logger.warn("Error writing to StatsD", e);
+		this.logger.warn("Error writing to Riemann", e);
 	}
 }

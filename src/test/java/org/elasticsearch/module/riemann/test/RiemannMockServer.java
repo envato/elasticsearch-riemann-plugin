@@ -1,4 +1,4 @@
-package org.elasticsearch.module.statsd.test;
+package org.elasticsearch.module.riemann.test;
 
 import org.elasticsearch.common.collect.Lists;
 
@@ -10,7 +10,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.Collection;
 
-public class StatsdMockServer extends Thread
+public class RiemannMockServer extends Thread
 {
 
 	private int					port;
@@ -18,7 +18,7 @@ public class StatsdMockServer extends Thread
 	private DatagramSocket		socket;
 	private boolean				isClosed	= false;
 
-	public StatsdMockServer(int port)
+	public RiemannMockServer(int port)
 	{
 		this.port = port;
 	}

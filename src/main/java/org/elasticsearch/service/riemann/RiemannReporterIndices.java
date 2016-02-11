@@ -1,26 +1,29 @@
-package org.elasticsearch.service.statsd;
+package org.elasticsearch.service.riemann;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import org.elasticsearch.action.admin.indices.stats.CommonStats;
+import org.elasticsearch.action.admin.indices.stats.IndexShardStats;
+import org.elasticsearch.action.admin.indices.stats.IndexStats;
+import org.elasticsearch.action.admin.indices.stats.IndicesStatsResponse;
+import org.elasticsearch.common.logging.ESLogger;
 
-import org.elasticsearch.action.admin.indices.stats.*;
-
-public class StatsdReporterIndices extends StatsdReporterIndexStats {
+public class RiemannReporterIndices extends RiemannReporterIndexStats {
 
 	private final IndicesStatsResponse indicesStatsResponse;
 	private final Boolean reportIndices;
 	private final Boolean reportShards;
+	private final ESLogger logger;
 
-	public StatsdReporterIndices(IndicesStatsResponse indicesStatsResponse, Boolean reportIndices, Boolean reportShards) {
+	public RiemannReporterIndices(IndicesStatsResponse indicesStatsResponse, Boolean reportIndices, Boolean reportShards, ESLogger logger) {
 		this.indicesStatsResponse = indicesStatsResponse;
 		this.reportIndices = reportIndices;
 		this.reportShards = reportShards;
+		this.logger = logger;
 	}
 
 	public void run() {
 		try {
 			// First report totals
+			logger.info("Sending common stats");
 			this.sendCommonStats(
 				this.buildMetricName("indices"),
 				this.indicesStatsResponse.getTotal()
@@ -29,6 +32,7 @@ public class StatsdReporterIndices extends StatsdReporterIndexStats {
 			if (this.reportIndices) {
 				for (IndexStats indexStats : this.indicesStatsResponse.getIndices().values()) {
 					String indexPrefix = "index." + indexStats.getIndex();
+        			logger.info("*** Sending index stats for " + indexPrefix);
 
 					this.sendCommonStats(
 						this.buildMetricName(indexPrefix + ".total"),

@@ -1,23 +1,23 @@
-package org.elasticsearch.plugin.statsd;
+package org.elasticsearch.plugin.riemann;
 
 import org.elasticsearch.common.collect.Lists;
 import org.elasticsearch.common.component.LifecycleComponent;
 import org.elasticsearch.plugins.AbstractPlugin;
-import org.elasticsearch.service.statsd.StatsdService;
+import org.elasticsearch.service.riemann.RiemannService;
 
 import java.util.Collection;
 
-public class StatsdPlugin extends AbstractPlugin
+public class RiemannPlugin extends AbstractPlugin
 {
 
 	public String name()
 	{
-		return "statsd";
+		return "riemann";
 	}
 
 	public String description()
 	{
-		return "StatsD Monitoring Plugin";
+		return "Riemann Monitoring Plugin";
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -25,7 +25,7 @@ public class StatsdPlugin extends AbstractPlugin
 	public Collection<Class<? extends LifecycleComponent>> services()
 	{
 		Collection<Class<? extends LifecycleComponent>> services = Lists.newArrayList();
-		services.add(StatsdService.class);
+		services.add(RiemannService.class);
 		return services;
 	}
 

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.elasticsearch.module.statsd.test;
+package org.elasticsearch.module.riemann.test;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

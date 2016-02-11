@@ -1,4 +1,4 @@
-package org.elasticsearch.module.statsd.test;
+package org.elasticsearch.module.riemann.test;
 
 import org.elasticsearch.common.logging.log4j.LogConfigurator;
 import org.elasticsearch.common.settings.ImmutableSettings;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class NodeTestHelper
 {
 
-	public static Node createNode(String clusterName, final int numberOfShards, int statsdPort, String refreshInterval)
+	public static Node createNode(String clusterName, final int numberOfShards, int riemannPort, String refreshInterval)
 		throws IOException
 	{
 		ImmutableSettings.Builder settingsBuilder = ImmutableSettings.settingsBuilder();
@@ -20,9 +20,10 @@ public class NodeTestHelper
 		settingsBuilder.put("index.number_of_shards", numberOfShards);
 		settingsBuilder.put("index.number_of_replicas", 1);
 
-		settingsBuilder.put("metrics.statsd.host", "localhost");
-		settingsBuilder.put("metrics.statsd.port", statsdPort);
-		settingsBuilder.put("metrics.statsd.every", refreshInterval);
+		settingsBuilder.put("metrics.riemann.host", "localhost");
+		settingsBuilder.put("metrics.riemann.port", riemannPort);
+		settingsBuilder.put("metrics.riemann.socket_type", "udp");
+		settingsBuilder.put("metrics.riemann.every", refreshInterval);
 
 		settingsBuilder.put("path.conf", "target/test-classes/config");
 

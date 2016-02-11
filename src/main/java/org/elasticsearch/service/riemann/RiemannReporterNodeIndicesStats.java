@@ -1,17 +1,13 @@
-package org.elasticsearch.service.statsd;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+package org.elasticsearch.service.riemann;
 
 import org.elasticsearch.indices.NodeIndicesStats;
 
-public class StatsdReporterNodeIndicesStats extends StatsdReporterIndexStats {
+public class RiemannReporterNodeIndicesStats extends RiemannReporterIndexStats {
 
 	private final NodeIndicesStats nodeIndicesStats;
 	private final String nodeName;
 
-	public StatsdReporterNodeIndicesStats(NodeIndicesStats nodeIndicesStats, String nodeName) {
+	public RiemannReporterNodeIndicesStats(NodeIndicesStats nodeIndicesStats, String nodeName) {
 		this.nodeIndicesStats = nodeIndicesStats;
 		this.nodeName = nodeName;
 	}
