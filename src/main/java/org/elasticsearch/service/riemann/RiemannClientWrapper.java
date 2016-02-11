@@ -6,10 +6,7 @@ import org.elasticsearch.common.logging.ESLogger;
 
 import com.aphyr.riemann.Proto.Msg;
 import com.aphyr.riemann.client.EventDSL;
-import com.aphyr.riemann.client.IPromise;
-import com.aphyr.riemann.client.RiemannBatchClient;
 import com.aphyr.riemann.client.RiemannClient;
-import com.aphyr.riemann.client.UnsupportedJVMException;
 
 public class RiemannClientWrapper {
 	private final ESLogger logger;
@@ -17,7 +14,7 @@ public class RiemannClientWrapper {
 	private final Integer  riemannPort;
 	private final String   socketType;
 	
-	private RiemannBatchClient  client;
+	private RiemannClient  client;
 
 	public RiemannClientWrapper(String riemannHost, Integer riemannPort, String socketType, ESLogger logger) {
 		this.riemannHost = riemannHost;
@@ -27,15 +24,14 @@ public class RiemannClientWrapper {
 		
 		try {
 			if(this.socketType.equals("udp")) {
-            	client = new RiemannBatchClient(RiemannClient.udp(this.riemannHost, this.riemannPort));
+				
+            	client = RiemannClient.udp(this.riemannHost, this.riemannPort);
 			} else {
-            	client = new RiemannBatchClient(RiemannClient.tcp(this.riemannHost, this.riemannPort));
+            	client = RiemannClient.tcp(this.riemannHost, this.riemannPort);
 			}
         	client.connect();
 		} catch(IOException ex) {
 			logger.error("Error creating client to host=" + riemannHost + " port=" + riemannPort + " type=" + socketType, ex);
-		} catch (UnsupportedJVMException ex) {
-			logger.error("Error creating clent to host=" + riemannHost + " port=" + riemannPort + " type=" + socketType, ex);
 		}
 	}
 	
