@@ -7,26 +7,25 @@ import org.elasticsearch.service.riemann.RiemannService;
 
 import java.util.Collection;
 
-public class RiemannPlugin extends AbstractPlugin
-{
+public class RiemannPlugin extends AbstractPlugin {
 
-	public String name()
-	{
-		return "riemann";
-	}
+    public String name()
+    {
+        return "riemann";
+    }
 
-	public String description()
-	{
-		return "Riemann Monitoring Plugin";
-	}
+    public String description()
+    {
+        return "Riemann Monitoring Plugin";
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Collection<Class<? extends LifecycleComponent>> services()
-	{
-		Collection<Class<? extends LifecycleComponent>> services = Lists.newArrayList();
-		services.add(RiemannService.class);
-		return services;
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public Collection<Class<? extends LifecycleComponent>> services()
+    {
+        Collection<Class<? extends LifecycleComponent>> services = Lists.newArrayList();
+        services.add(RiemannService.class);
+        return services;
+    }
 
 }
