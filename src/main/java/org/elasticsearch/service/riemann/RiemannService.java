@@ -77,7 +77,7 @@ public class RiemannService extends AbstractLifecycleComponent<RiemannService> {
             "metrics.riemann.report.fs_details", false
         );
 
-        this.riemannClient = new RiemannClientWrapper(this.riemannHost, this.riemannPort, this.riemannSocketType, this.logger);
+        this.riemannClient = new RiemannClientWrapper(this.riemannHost, this.riemannPort, this.riemannSocketType, this.logger, settings.get("cluster.name"));
     }
 
     @Override
@@ -119,7 +119,6 @@ public class RiemannService extends AbstractLifecycleComponent<RiemannService> {
         @Override
         public void run() {
             while (!RiemannService.this.closed) {
-                logger.info("** Loop starts");
                 DiscoveryNode node = RiemannService.this.clusterService.localNode();
                 ClusterState state = RiemannService.this.clusterService.state();
                 boolean isClusterStarted = RiemannService.this.clusterService
@@ -148,7 +147,6 @@ public class RiemannService extends AbstractLifecycleComponent<RiemannService> {
                             riemanndNodeName,
                             RiemannService.this.riemannReportFsDetails
                         );
-                        logger.info("*** Sending node-local stats");
                         nodeStatsReporter
                             .setRiemannClient(RiemannService.this.riemannClient)
                             .run();
@@ -162,7 +160,6 @@ public class RiemannService extends AbstractLifecycleComponent<RiemannService> {
                             ),
                             riemanndNodeName
                         );
-                        logger.info("*** Sending node-local indices stats");
                         nodeIndicesStatsReporter
                             .setRiemannClient(RiemannService.this.riemannClient)
                             .run();
@@ -181,14 +178,12 @@ public class RiemannService extends AbstractLifecycleComponent<RiemannService> {
                             RiemannService.this.riemannReportShards,
                             logger
                         );
-                        logger.info("*** Sending cluster-wide stats from master");
                         indicesReporter
                             .setRiemannClient(RiemannService.this.riemannClient)
                             .run();
                     }
                 }
 
-                logger.info("*** main loop complete; sleeping");
                 try {
                     Thread.sleep(RiemannService.this.riemannRefreshInterval.millis());
                 } catch (InterruptedException e1) {

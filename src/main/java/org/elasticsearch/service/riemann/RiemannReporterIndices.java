@@ -22,7 +22,7 @@ public class RiemannReporterIndices extends RiemannReporterIndexStats {
     public void run() {
         try {
             // First report totals
-            logger.info("Sending common stats");
+            logger.debug("Sending common stats");
             this.sendCommonStats(
                 this.buildMetricName("indices"),
                 this.indicesStatsResponse.getTotal()
@@ -31,7 +31,7 @@ public class RiemannReporterIndices extends RiemannReporterIndexStats {
             if (this.reportIndices) {
                 for (IndexStats indexStats : this.indicesStatsResponse.getIndices().values()) {
                     String indexPrefix = "index." + indexStats.getIndex();
-                    logger.info("*** Sending index stats for " + indexPrefix);
+                    logger.debug("Sending index stats for " + indexPrefix);
 
                     this.sendCommonStats(
                         this.buildMetricName(indexPrefix + ".total"),
