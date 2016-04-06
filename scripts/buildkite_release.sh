@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # hackity hack hack hack!  Move this to the AMI
-javac -version 2>/dev/null || sudo apt-get install -y openjdk-7-jdk
+# doesn't work because no sudo :/   javac -version 2>/dev/null || sudo apt-get install -y openjdk-7-jdk
 
 ./mvnw clean package
 
