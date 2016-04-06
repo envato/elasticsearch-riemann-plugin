@@ -1,8 +1,8 @@
 rootLogger: INFO, console
 
 logger:
-  service.statsd: DEBUG
-  plugin.statsd.StatsdPlugin: DEBUG
+  service.riemann: DEBUG
+  plugin.riemann.RiemannPlugin: DEBUG
 
 appender:
   console:
